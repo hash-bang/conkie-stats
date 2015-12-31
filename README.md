@@ -120,6 +120,14 @@ The system object is made up of several values:
 * `system.platform` - Node compatible short platform name
 
 
+`temperature`
+-------------
+The temperature object is made up of several values:
+
+* `temperature.main` - Main system temperature
+* `temperature.cores` - Array of temperatures for each core
+
+
 `topIO`
 -------
 Collection of Top I/O using processes.

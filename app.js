@@ -15,6 +15,7 @@ conkieStats
 		'system',
 		'temperature',
 		'topCPU',
+		'topMemory',
 	])
 	.on('error', function(err) {
 		console.log(colors.red('ERROR', err));

@@ -15,9 +15,9 @@ module.exports = {
 				'top',
 				'-Sb',
 				'-n1',
-				'-o%CPU',
+				'-o%MEM',
 			])
-			.then('topCPU', function(next) {
+			.then('topMemory', function(next) {
 				var topSlicer = /^\s*([0-9]+)\s+(.+?)\s+([0-9\-]+)\s+([0-9\-]+)\s+([0-9]+)\s+([0-9]+)\s+([0-9]+)\s+(.)\s+([0-9\.]+)\s+([0-9\.]+)\s+([0-9\.:]+)\s+(.+)\s*$/;
 				next(null, _(this.topOutput)
 					.map(function(line) { return line.split('\n') })
@@ -47,7 +47,7 @@ module.exports = {
 			.end(function(err) {
 				if (err) return finish(err);
 				finish(null, {
-					topCPU: this.topCPU,
+					topMemory: this.topMemory,
 				});
 			});
 	},

@@ -12,9 +12,10 @@ function ConkieStats() {
 
 	this.register = function() {
 		_.flatten(Array.prototype.slice.call(arguments))
-			.forEach(function(mod) {
+			.forEach(function(modName) {
 				try {
-					var mod = require(__dirname + '/modules/' + mod);
+					var mod = require(__dirname + '/modules/' + modName);
+					mod.name = modName;
 					mods.push(mod);
 					mod.register(function() { }, self);
 					self.emit('moduleRegister', mod);

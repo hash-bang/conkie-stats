@@ -13,6 +13,7 @@ conkieStats
 		'memory',
 		'net',
 		'system',
+		'temperature',
 	])
 	.on('error', function(err) {
 		console.log(colors.red('ERROR', err));

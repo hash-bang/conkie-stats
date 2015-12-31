@@ -11,10 +11,4 @@ module.exports = {
 			},
 		});
 	},
-	register: function(finish, parentStats) {
-		finish();
-	},
-	unregister: function(finish) {
-		finish();
-	},
 };

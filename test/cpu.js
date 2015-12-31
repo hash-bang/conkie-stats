@@ -15,10 +15,8 @@ describe('Conkie / CPU', function() {
 			.on('update', function(rawStats) {
 				stats = rawStats;
 			})
+			.once('ready', done)
 			.register('cpu');
-
-		// Wait 3 seconds so we can gather some stats
-		setTimeout(done, 3000);
 	});
 
 	it('should register a CPU handler', function() {

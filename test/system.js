@@ -12,8 +12,8 @@ describe('Conkie / System', function() {
 			})
 			.on('update', function(rawStats) {
 				stats = rawStats;
-				done();
 			})
+			.once('ready', done)
 			.register('system');
 	});
 

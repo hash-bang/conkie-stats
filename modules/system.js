@@ -7,6 +7,7 @@ module.exports = {
 				arch: os.arch(),
 				hostname: os.hostname(),
 				platform: os.platform(),
+				uptime: os.uptime(),
 			},
 		});
 	},

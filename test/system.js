@@ -12,10 +12,9 @@ describe('Conkie / System', function() {
 			})
 			.on('update', function(rawStats) {
 				stats = rawStats;
+				done();
 			})
 			.register('system');
-
-		done();
 	});
 
 	it('should register a System handler', function() {
@@ -35,5 +34,11 @@ describe('Conkie / System', function() {
 
 		expect(stats.system).to.have.property('platform');
 		expect(stats.system.platform).to.be.a.string;
+	});
+
+	it('should provide system uptime', function() {
+		expect(stats.system).to.have.property('uptime');
+		expect(stats.system.uptime).to.be.a.number;
+		expect(stats.system.uptime).to.be.above(0);
 	});
 });

@@ -1,6 +1,6 @@
 {
   "name": "conkie-stats",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Cross-platform system-statistics (data gatherer for the Conkie project)",
   "main": "index.js",
   "scripts": {

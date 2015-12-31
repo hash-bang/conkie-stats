@@ -3,26 +3,24 @@
 var _ = require('lodash');
 var colors = require('colors');
 var conkieStats = require('./index');
+var util = require('util');
 
 conkieStats
 	.register([
 		'cpu',
+		'dropbox',
+		'io',
+		'memory',
+		'net',
 		'system',
 	])
+	.on('error', function(err) {
+		console.log(colors.red('ERROR', err));
+	})
+	.on('debug', function(err) {
+		console.log(colors.grey('DEBUG', err));
+	})
 	.on('update', function(stats) {
-		console.log();
-		[
-			'cpu.load',
-			'cpu.usage',
-			'system.arch',
-			'system.hostname',
-			'system.platform',
-		]
-			.forEach(function(key) {
-				console.log(colors.cyan(key), '=', _.get(stats, key));
-			});
+		// Output colorful JSON structure of system information
+		console.log(util.inspect(stats, {depth: null, colors: true}));
 	});
-
-setTimeout(function() {
-	console.log('PULSE TERMINATE!');
-}, 10000);

@@ -10,26 +10,55 @@ function ConkieStats() {
 
 	// FIXME: unregister
 
-	this.register = function() {
-		_.flatten(Array.prototype.slice.call(arguments))
-			.forEach(function(modName) {
+	this.register = function(finish) {
+		async()
+			.set('newMods', [])
+			.forEach(_.flatten(Array.prototype.slice.call(arguments)), function(next, modName) {
 				try {
 					var mod = require(__dirname + '/modules/' + modName);
 					mod.name = modName;
 					mods.push(mod);
-					mod.register(function() { }, self);
-					self.emit('moduleRegister', mod);
+					// FIXME: Finish action currently doesnt wait for response / error
+					if (_.isFunction(mod.register)) {
+						mod.register(function(err) {
+							if (err) return next(err);
+							self.emit('moduleRegister', mod);
+							next();
+						}, self);
+					} else {
+						self.emit('moduleRegister', mod);
+						next();
+					}
 				} catch (e) {
-					self.emit('error', 'Error registering module "' + mod + '" - ' + e.toString());
+					next('Error registering module "' + mod + '" - ' + e.toString());
 				}
+			})
+			// Force poll all modules {{{
+			.then(function(next) {
+				self.performPoll(next);
+			})
+			// }}}
+			// Emit: ready {{{
+			.then(function(next) {
+				self.emit('ready');
+			})
+			// }}}
+			.end(function(err) {
+				if (err) self.emit('error', err.toString());
+				if (_.isFunction(finish)) finish(err);
 			});
-		setTimeout(this.performPoll, null);
+
 		return this;
 	};
 
 	this.update = function(data) {
 		self.emit('updatePartial', data);
-		_.merge(payload, data);
+		_.merge(payload, data, function(a, b, c) {
+			if (_.isArray(a)) return b; // Arrays are always taken in their entirety
+			return undefined;
+		});
+
+		return this;
 	};
 
 	var pollHandle;

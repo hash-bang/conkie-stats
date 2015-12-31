@@ -37,4 +37,9 @@ describe('Conkie / CPU', function() {
 			expect(l).to.be.a.number;
 		});
 	});
+
+	it('should provide CPU usage', function() {
+		expect(stats.cpu).to.have.property('usage');
+		expect(stats.cpu.usage).to.be.a.number;
+	});
 });

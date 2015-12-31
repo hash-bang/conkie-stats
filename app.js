@@ -14,6 +14,7 @@ conkieStats
 		'net',
 		'system',
 		'temperature',
+		'topCPU',
 	])
 	.on('error', function(err) {
 		console.log(colors.red('ERROR', err));

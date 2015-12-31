@@ -128,6 +128,21 @@ The temperature object is made up of several values:
 * `temperature.cores` - Array of temperatures for each core
 
 
+`topCPU`
+--------
+Collection of Top CPU using processes.
+
+* `topCPU.*.pid` - The PID of the process
+* `topCPU.*.user` - The user owner of the process
+* `topCPU.*.priority` - The scheduling priority of the process
+* `topCPU.*.nice` - The nice value of the process
+* `topCPU.*.mode` - The mode of the process (D = uninteruptable sleep, R = Running, S = Sleeping, T = Traced / Debugging, Z = Zombie)
+* `topCPU.*.cpuPercent` - The currently used CPU percentage of the process
+* `topCPU.*.ramPercent` - The currently used RAM percentage of the process
+* `topCPU.*.cpuTime` - The currently consumed CPU time of the process
+* `topCPU.*.name` - The name of the process
+
+
 `topIO`
 -------
 Collection of Top I/O using processes.
@@ -138,6 +153,12 @@ Collection of Top I/O using processes.
 * `topIo.*.ioRead` - The disk write in killobytes
 * `topIo.*.name` - The full name of the process
 
+
+`topMemory`
+-----------
+Collection of Top Memory using processes.
+
+See the output of [topCPU](#topcpu) for a description of each field.
 
 
 API

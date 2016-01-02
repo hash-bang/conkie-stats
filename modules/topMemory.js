@@ -36,7 +36,7 @@ module.exports = {
 							// shr: bits[7],
 							mode: bits[8],
 							cpuPercent: bits[9],
-							ramPercent: bits[10],
+							memPercent: bits[10],
 							cpuTime: bits[11],
 							name: bits[12],
 						};

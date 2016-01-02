@@ -14,12 +14,15 @@ This module is designed to provide continiously updating system information - id
 			'memory',
 			'net',
 			'system',
+			'temperature',
+			'topCPU',
+			'topMemory',
 		])
 		.on('error', function(err) {
-			console.log(colors.red('ERROR', err));
+			console.log('ERROR', err);
 		})
-		.on('debug', function(err) {
-			console.log(colors.grey('DEBUG', err));
+		.on('debug', function(msg) {
+			console.log('DEBUG', msg);
 		})
 		.on('update', function(stats) {
 			console.log(stats);
@@ -162,7 +165,7 @@ See the output of [topCPU](#topcpu) for a description of each field.
 
 
 API
-===
+
 The main module exposes the following methods:
 
 * `register(module...)` - Request a module (corresponds to a filename within the `modules/` directory). Some modules require external binaries and will raise errors if this is not satisfied. Arguments can be passed as strings or an array of strings.

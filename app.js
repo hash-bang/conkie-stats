@@ -17,6 +17,11 @@ conkieStats
 		'topCPU',
 		'topMemory',
 	])
+	.settings({
+		net: {
+			ignoreNoIP: true,
+		},
+	})
 	.on('error', function(err) {
 		console.log(colors.red('ERROR', err));
 	})

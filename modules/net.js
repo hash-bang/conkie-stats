@@ -8,10 +8,14 @@ var bandwidthUsage = {}; // Holder for polled bandwidth info
 
 module.exports = {
 	settings: {
-		bwmNg: true,
+		net: {
+			bwmNg: true,
+			ignoreNoIP: true,
+		},
 	},
 	poll: function(finish) {
 		async()
+			.set('settings', this.settings)
 			.set('bandwidthUsage', {})
 			.parallel({
 				adapters: function(next) {
@@ -49,6 +53,16 @@ module.exports = {
 				// }}}
 				next();
 			})
+			.then('adapters', function(next) {
+				// Filter out adapters based on `ignore*` criteria {{{
+				if (_.get(this.settings, 'net.ignoreNoIP'))
+					this.adapters = this.adapters.filter(function(adapter) {
+						return (adapter.ipv4_address || adapter.ipv6_address);
+					});
+
+				return next(null, this.adapters);
+				// }}}
+			})
 			.end(function(err) {
 				if (err) return finish(err);
 				finish(null, {
@@ -61,7 +75,7 @@ module.exports = {
 		which('bwm-ng', function(err, binPath) {
 			if (err) { // If no binary - disable BWM-NG polling
 				parentStats.emit('debug', 'Binary `bwm-ng` is not in path - disabling bandwith statistics');
-				settings.bwmNg = false;
+				_.set(settings, 'net.bwmNg', false);
 			}
 			finish();
 		});

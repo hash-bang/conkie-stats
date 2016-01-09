@@ -103,6 +103,14 @@ Most network interfaces are populated via `ipconfig` but wireless devices have t
 
 If `bwm-ng` is installed the `downSpeed` / `upSpeed` properties are also provided.
 
+##Settings##
+
+| Option         | Type      | Default      | Description |
+| ---------------|-----------|--------------|-------------|
+| net.bwmNg      | Boolean   | `true`       | Use `bwm-ng` to gather bandwidth stats. If the binary cannot be found when the module is registered this is automatically disabled |
+| net.ignoreNoIP | Boolean   | `false`      | Remove all network devices that currently have no IP address |
+
+
 The result should resemble the following:
 
 ```

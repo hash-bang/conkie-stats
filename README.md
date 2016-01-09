@@ -34,6 +34,39 @@ Conkie-Stats is actually made up of a few chosen sub-modues. Ideally each sub-mo
 If you have any recommendations for either code commits or NPM modules please please submit a PR or [GitHub Issue](https://github.com/hash-bang/Conkie-Stats/issues).
 
 
+CLI
+===
+Conkie-Stats also ships with a (very very very) basic Stats outputter.
+
+	conkie-stats
+
+At present this doesn't realy do much expect spew the collected stats object to the screen in a loop every second.
+
+
+Cross-platform development
+==========================
+Conkie-Stats relies on a few external components to gather system statistics:
+
+* `bwm-ng` - Network bandwidth monitoring
+* `df` - Disk usage info (part of GNU coreutils)
+* `ifconfig` / `iwconfig` - Base network interface libraries (part of net-tools)
+* `iotop` - Disk usage statistics
+* `lm-sensors` - The `sensors` binary provides information about various system temperatures
+
+If you know a way to provide cross-platform support for these modules please either get in touch or submit a pull-request.
+
+
+Installation
+------------
+
+**Linux based systems:**
+
+(ifconfig + df should already be installed)
+
+	sudo apt-get install bwm-ng lm-sensors iotop
+
+
+
 Provided data
 =============
 

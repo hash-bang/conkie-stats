@@ -11,6 +11,7 @@ module.exports = {
 		net: {
 			bwmNg: true,
 			ignoreNoIP: true,
+			ignoreDevice: [],
 		},
 	},
 	poll: function(finish) {
@@ -54,10 +55,16 @@ module.exports = {
 				next();
 			})
 			.then('adapters', function(next) {
+				var self = this;
 				// Filter out adapters based on `ignore*` criteria {{{
-				if (_.get(this.settings, 'net.ignoreNoIP'))
+				if (_.get(self.settings, 'net.ignoreNoIP'))
 					this.adapters = this.adapters.filter(function(adapter) {
 						return (adapter.ipv4_address || adapter.ipv6_address);
+					});
+
+				if (_.get(self.settings, 'net.ignoreDevice'))
+					this.adapters = this.adapters.filter(function(adapter) {
+						return (!_.contains(self.settings.net.ignoreDevice, adapter.interface));
 					});
 
 				return next(null, this.adapters);

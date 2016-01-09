@@ -7,8 +7,11 @@ function ConkieStats() {
 	var self = this;
 	var mods = [];
 	var payload = {};
+	var _settings = {};
 
 	// FIXME: unregister
+
+	this._settings = _settings;
 
 	this.register = function(finish) {
 		async()
@@ -18,6 +21,13 @@ function ConkieStats() {
 					var mod = require(__dirname + '/modules/' + modName);
 					mod.name = modName;
 					mods.push(mod);
+
+					// Merge in mod's settings (if any)
+					if (_.isObject(mod.settings)) {
+						_.defaults(self._settings, mod.settings);
+						mod.settings = self._settings; // Glue mod.settings to the main settings structure
+					}
+
 					// FIXME: Finish action currently doesnt wait for response / error
 					if (_.isFunction(mod.register)) {
 						mod.register(function(err) {
@@ -48,6 +58,11 @@ function ConkieStats() {
 				if (_.isFunction(finish)) finish(err);
 			});
 
+		return this;
+	};
+
+	this.settings = function(options) {
+		_.merge(this._settings, options);
 		return this;
 	};
 

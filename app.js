@@ -13,6 +13,7 @@ conkieStats
 		'io',
 		'memory',
 		'net',
+		'power',
 		'system',
 		'temperature',
 		'topCPU',

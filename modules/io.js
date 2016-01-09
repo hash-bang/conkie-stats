@@ -55,6 +55,7 @@ module.exports = {
 							name: bits[8],
 						};
 					})
+					.filter()
 					.value();
 				next();
 			})
@@ -75,8 +76,5 @@ module.exports = {
 
 			finish();
 		});
-	},
-	unregister: function(finish) {
-		finish();
 	},
 };

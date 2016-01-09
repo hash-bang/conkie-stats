@@ -78,6 +78,26 @@ Various CPU related information.
 * `cpu.load` - A three part array listing the 1, 5 and 15 minute load readings as floats
 
 
+`disks`
+-------
+A collection (array of objects) of all active mounted disks within the system.
+
+The result should resemble the following:
+
+```
+	[
+		{
+			filesystem: '/dev/sdb7',
+			type: 'ext4',
+			blocks: '63384396',
+			used: '35256768',
+			free: '24891532',
+			mount: '/',
+		},
+	]
+```
+
+
 `io`
 -----
 The IO object is made up of several values:

@@ -8,6 +8,7 @@ var util = require('util');
 conkieStats
 	.register([
 		'cpu',
+		'disks',
 		'dropbox',
 		'io',
 		'memory',

@@ -115,6 +115,30 @@ Various Memory related information.
 * `memory.total` - The total amount of system RAM as a long unformatted integer
 
 
+`power`
+-------
+A collection (array of objects) of all active power sub-systems. These usually correspond to batteries.
+
+The result should resemble the following:
+
+```
+	[
+		{
+			charge: 2628000
+			chargeFull: 4412000,
+			device: 'BAT0',
+			manufacturer: 'MSI',
+			percent: 59,
+			model: 'BIF0_9',
+			status: 'charging', // charging, discharging
+			voltage: 10934000,
+			remainingTime: 3809.2470277410835, // Remaining time in seconds
+		},
+	]
+```
+
+
+
 `net`
 -----
 A collection (array of objects) of all active network connections.

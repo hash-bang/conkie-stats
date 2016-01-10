@@ -58,6 +58,7 @@ module.exports = {
 							// Post data calculations
 							self.devices[index].percent = _.round(self.devices[index].charge / self.devices[index].chargeFull * 100);
 							self.devices[index].remainingTime = self.devices[index].charge / self.devices[index].current * 60 * 60;
+							self.devices[index].remainingChargingTime = (self.devices[index].chargeFull - self.devices[index].charge) / self.devices[index].current * 60 * 60;
 							next();
 						});
 				})

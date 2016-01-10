@@ -10,7 +10,8 @@ module.exports = {
 	settings: {
 		net: {
 			bwmNg: true,
-			ignoreNoIP: true,
+			ignoreNoIP: false,
+			ignoreNoBandwidth: false,
 			ignoreDevice: [],
 		},
 	},
@@ -60,6 +61,11 @@ module.exports = {
 				if (_.get(self.settings, 'net.ignoreNoIP'))
 					this.adapters = this.adapters.filter(function(adapter) {
 						return (adapter.ipv4_address || adapter.ipv6_address);
+					});
+
+				if (_.get(self.settings, 'net.ignoreNoBandwidth'))
+					this.adapters = this.adapters.filter(function(adapter) {
+						return (adapter.downSpeed || adapter.upSpeed);
 					});
 
 				if (_.get(self.settings, 'net.ignoreDevice'))

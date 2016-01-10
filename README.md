@@ -98,6 +98,41 @@ The result should resemble the following:
 ```
 
 
+`files`
+-------
+Monitor file contents and return them as an array.
+
+This module is not auto-loaded (e.g. via `register('*')`) and needs manual settings to operate.
+
+Specify each file return value as the key and the file path as the value of the `files` settings object:
+
+	conkieStats.settings({
+		files: {
+			wagesPerHour: '/home/joerandom/wages',
+			widgetsPerFoobar: '/tmp/foobar',
+		},
+	});
+
+Assuming those files exist this should create the structure as the output stats:
+
+	{
+		files: {
+			wagesPerHour: [100],
+			widgetsPerFoobar: [
+				'foo',
+				'bar',
+				'baz',
+			],
+		},
+	}
+
+**NOTES**
+
+* Any error returned by node is accepted as the file contents as a single string. Its up to you to type check this. The module will *not* fail when a file does not exist.
+* Files are read as UTF8
+* Empty lines at the end of the file are automatically truncated
+
+
 `io`
 -----
 The IO object is made up of several values:

@@ -34,8 +34,8 @@ module.exports = {
 						// Process first line of output which gives us the total system I/O {{{
 						var bits = /Total DISK READ\s+:\s+([0-9\.]+) K\/s\s+\|\s+Total DISK WRITE\s+:\s+([0-9\.]+) K\/s/.exec(lines[0]);
 						if (bits) {
-							self.totalRead = bits[1];
-							self.totalWrite = bits[2];
+							self.totalRead = parseFloat(bits[1]);
+							self.totalWrite = parseFloat(bits[2]);
 						}
 						// }}}
 					})

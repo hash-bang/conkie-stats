@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var async = require('async-chainable');
 var asyncExec = require('async-chainable-exec');
 var which = require('which');
@@ -10,7 +11,9 @@ module.exports = {
 			.end(function(err) {
 				if (err) return finish(err);
 				finish(null, {
-					dropbox: this.dropbox
+					dropbox: _.flatten(this.dropbox.map(function(line) {
+						return line.split('\n');
+					})),
 				});
 			});
 	},

@@ -274,7 +274,7 @@ Module API
 Each module is expected to be composed of the following properties:
 
 * `module.name` - String identifying the module - automatically appended by the parent process
-* `module.register(finish, parentObject)` - Optional registration callback
+* `module.register(finish, parentObject)` - Optional registration callback. If called with no arguments or with `register('*')` all non-debugging modules will be loaded - this can cause issues if your setup is missing any of the external dependencies
 * `module.unregister(finish, parentObject)` - Optional de-registration callback
 * `module.poll(finish, parentObject)` - Optional polling callback - will be invoked by default every 1000ms and can return data as the callback payload. Any payload will automatically be run via `update(data)`
 * `module.settings` - Object containing the modules settings

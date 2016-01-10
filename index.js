@@ -3,6 +3,21 @@ var async = require('async-chainable');
 var events = require('events');
 var util = require('util');
 
+// Modules that should be loaded on register() / register('*')
+var assumeAll = [
+	'cpu',
+	'disks',
+	'dropbox',
+	'io',
+	'memory',
+	'net',
+	'power',
+	'system',
+	'temperature',
+	'topCPU',
+	'topMemory',
+];
+
 function ConkieStats() {
 	var self = this;
 	var mods = [];
@@ -15,8 +30,20 @@ function ConkieStats() {
 
 	this.register = function(finish) {
 		async()
+			.set('mods', _.flatten(Array.prototype.slice.call(arguments)))
 			.set('newMods', [])
-			.forEach(_.flatten(Array.prototype.slice.call(arguments)), function(next, modName) {
+			.then(function(next) {
+				if (
+					(!this.mods.length) ||
+					(this.mods.length == 1 && this.mods[0] == '*')
+				) { // Register all in assumeAll
+					this.mods = assumeAll;
+					return next();
+				} else {
+					return next();
+				}
+			})
+			.forEach('mods', function(next, modName) {
 				try {
 					var mod = require(__dirname + '/modules/' + modName);
 					mod.name = modName;

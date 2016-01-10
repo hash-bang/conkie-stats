@@ -4,7 +4,8 @@
   "description": "Cross-platform system-statistics (data gatherer for the Conkie project)",
   "main": "index.js",
   "bin": {
-    "conkie-stats": "./app.js"
+    "conkie-stats": "./app.js",
+    "conkie-stats-json": "./spew.js"
   },
   "scripts": {
     "test": "mocha"
@@ -36,6 +37,7 @@
   "devDependencies": {
     "chai": "^3.4.1",
     "colors": "^1.1.2",
-    "mocha": "^2.3.4"
+    "mocha": "^2.3.4",
+    "moment": "^2.11.1"
   }
 }

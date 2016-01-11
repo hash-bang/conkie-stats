@@ -32,6 +32,7 @@ function ConkieStats() {
 		async()
 			.set('mods', _.flatten(Array.prototype.slice.call(arguments)))
 			.set('newMods', [])
+			.set('failedMods', [])
 			.then(function(next) {
 				if (
 					(!this.mods.length) ||
@@ -47,7 +48,6 @@ function ConkieStats() {
 				try {
 					var mod = require(__dirname + '/modules/' + modName);
 					mod.name = modName;
-					mods.push(mod);
 
 					// Merge in mod's settings (if any)
 					if (_.isObject(mod.settings)) {
@@ -58,11 +58,16 @@ function ConkieStats() {
 					// FIXME: Finish action currently doesnt wait for response / error
 					if (_.isFunction(mod.register)) {
 						mod.register(function(err) {
-							if (err) return next(err);
-							self.emit('moduleRegister', mod);
+							if (err) {
+								self.emit('debug', 'Module ' + mod.name + ' failed to load');
+							} else {
+								mods.push(mod);
+								self.emit('moduleRegister', mod);
+							}
 							next();
 						}, self);
 					} else {
+						mods.push(mod);
 						self.emit('moduleRegister', mod);
 						next();
 					}

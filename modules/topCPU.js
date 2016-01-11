@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var async = require('async-chainable');
 var asyncExec = require('async-chainable-exec');
+var which = require('which');
 
 module.exports = {
 	settings: {
@@ -50,5 +51,12 @@ module.exports = {
 					topCPU: this.topCPU,
 				});
 			});
+	},
+	register: function(finish) {
+		which('top', function(err, path) {
+			if (err) return finish('Needed stats binary `top` is not in PATH. Either install it or disable the `topCPU` module');
+
+			finish();
+		});
 	},
 };

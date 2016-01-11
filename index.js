@@ -72,7 +72,7 @@ function ConkieStats() {
 			})
 			// Force poll all modules {{{
 			.then(function(next) {
-				self.performPoll(next);
+				self.poll(next);
 			})
 			// }}}
 			// Emit: ready {{{
@@ -104,7 +104,7 @@ function ConkieStats() {
 	};
 
 	var pollHandle;
-	this.performPoll = function(finish) {
+	this.poll = function(finish) {
 		clearTimeout(pollHandle); // Cancel scheduled polls
 
 		async()
@@ -119,7 +119,7 @@ function ConkieStats() {
 			.end(function(err) {
 				self.emit('update', payload);
 				// Reschedule
-				pollHandle = setTimeout(self.performPoll, 1000);
+				pollHandle = setTimeout(self.poll, 1000);
 				if (_.isFunction(finish)) finish(err);
 			});
 	};

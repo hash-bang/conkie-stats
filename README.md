@@ -292,7 +292,7 @@ The main module exposes the following methods:
 
 * `register(module...)` - Request a module (corresponds to a filename within the `modules/` directory). Some modules require external binaries and will raise errors if this is not satisfied. Arguments can be passed as strings or an array of strings.
 * `update(data)` - Merge the main system payload with the provided data. This is a standard object merge however arrays are taken as mutable objects (i.e. a new array value completely overrides the previous one).
-* `performPoll()` - Force a poll of all modules. This is really only intended as an internal function.
+* `poll()` - Force a poll of all modules. This is really only intended as an internal function.
 
 
 Events

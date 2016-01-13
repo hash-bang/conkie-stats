@@ -23,6 +23,7 @@ function ConkieStats() {
 	var mods = [];
 	var payload = {};
 	var _settings = {};
+	var _pollFreq = 1000;
 
 	// FIXME: unregister
 
@@ -108,6 +109,13 @@ function ConkieStats() {
 		return this;
 	};
 
+	this.setPollFreq = function(timeout) {
+		clearTimeout(pollHandle); // Cancel scheduled polls
+		if (!_.isUndefined(timeout)) self._pollFreq = timeout;
+		pollHandle = setTimeout(self.poll, self._pollFreq);
+		return this;
+	};
+
 	var pollHandle;
 	this.poll = function(finish) {
 		clearTimeout(pollHandle); // Cancel scheduled polls
@@ -124,9 +132,11 @@ function ConkieStats() {
 			.end(function(err) {
 				self.emit('update', payload);
 				// Reschedule
-				pollHandle = setTimeout(self.poll, 1000);
+				pollHandle = setTimeout(self.poll, self._pollFreq);
 				if (_.isFunction(finish)) finish(err);
 			});
+
+		return this;
 	};
 };
 

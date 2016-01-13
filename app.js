@@ -41,8 +41,11 @@ conkieStats
 program
 	.option('-h, --human', 'Try to be helpful with certain values (converts times to human readable on certain outputs')
 	.option('-m, --module [mod...]', 'Specify a module to use (if omitted all are used)', function(item, value) { value.push(item); return value; }, [])
+	.option('-r, --refresh [ms]', 'Refresh interval for polling modules in milliseconds', 1000)
 	.option('-s, --settings [json]', 'Specify a settings object')
 	.parse(process.argv);
+
+conkieStats.setPollFreq(program.refresh);
 
 // -m, --module [mods,...] {{{
 if (program.module) {

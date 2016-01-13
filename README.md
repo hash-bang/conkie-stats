@@ -287,10 +287,13 @@ See the output of [topCPU](#topcpu) for a description of each field.
 
 
 API
+===
 
-The main module exposes the following methods:
+The main module exposes the following chainable methods:
 
 * `register(module...)` - Request a module (corresponds to a filename within the `modules/` directory). Some modules require external binaries and will raise errors if this is not satisfied. Arguments can be passed as strings or an array of strings.
+* `setPollFreq(timeout)` - Set the polling frequency for modules that poll (in milliseconds)
+* `settings(settingsObject)` - Set the Conkie-Stats settings object
 * `update(data)` - Merge the main system payload with the provided data. This is a standard object merge however arrays are taken as mutable objects (i.e. a new array value completely overrides the previous one).
 * `poll()` - Force a poll of all modules. This is really only intended as an internal function.
 

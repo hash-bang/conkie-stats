@@ -25,11 +25,11 @@ module.exports = {
 					wirelessTools.ifconfig.status(next);
 				},
 				iwconfig: function(next) {
-					if (_.get(this.settings, 'net.iwconfig')) return next();
+					if (!_.get(this.settings, 'net.iwconfig')) return next();
 					wirelessTools.iwconfig.status(next);
 				},
 				bandwidth: function(next) {
-					if (_.get(this.settings, 'net.bwmNg')) return next();
+					if (!_.get(this.settings, 'net.bwmNg')) return next();
 					var self = this;
 					bwmNg.check(function(iface, bytesDown, bytesUp) {
 						bandwidthUsage[iface] = {

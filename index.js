@@ -60,7 +60,7 @@ function ConkieStats() {
 					if (_.isFunction(mod.register)) {
 						mod.register(function(err) {
 							if (err) {
-								self.emit('debug', 'Module ' + mod.name + ' failed to load');
+								self.emit('debug', 'Module ' + mod.name + ' failed to load - ' + err.toString());
 							} else {
 								mods.push(mod);
 								self.emit('moduleRegister', mod);

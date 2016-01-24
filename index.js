@@ -109,6 +109,7 @@ function ConkieStats() {
 		return this;
 	};
 
+	var pollHandle;
 	this.setPollFreq = function(timeout) {
 		clearTimeout(pollHandle); // Cancel scheduled polls
 		if (!_.isUndefined(timeout)) self._pollFreq = timeout;
@@ -116,7 +117,6 @@ function ConkieStats() {
 		return this;
 	};
 
-	var pollHandle;
 	this.poll = function(finish) {
 		clearTimeout(pollHandle); // Cancel scheduled polls
 

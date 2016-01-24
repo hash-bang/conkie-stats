@@ -9,7 +9,8 @@ var bandwidthUsage = {}; // Holder for polled bandwidth info
 module.exports = {
 	settings: {
 		net: {
-			bwmNg: true,
+			bwmNg: true, // Whether binary `bwm-ng` is available
+			iwconfig: true, // Whether binary `iwconfig` is available
 			ignoreNoIP: false,
 			ignoreNoBandwidth: false,
 			ignoreDevice: [],
@@ -24,9 +25,11 @@ module.exports = {
 					wirelessTools.ifconfig.status(next);
 				},
 				iwconfig: function(next) {
+					if (_.get(this.settings, 'net.iwconfig')) return next();
 					wirelessTools.iwconfig.status(next);
 				},
 				bandwidth: function(next) {
+					if (_.get(this.settings, 'net.bwmNg')) return next();
 					var self = this;
 					bwmNg.check(function(iface, bytesDown, bytesUp) {
 						bandwidthUsage[iface] = {
@@ -39,12 +42,14 @@ module.exports = {
 			})
 			.forEach('adapters', function(next, adapter) {
 				// Merge .net + Wlan adapter info {{{
-				var wlan = _.find(this.iwconfig, {interface: adapter.interface });
-				if (wlan) { // Matching wlan adapter
-					adapter.type = 'wireless';
-					_.merge(adapter, wlan);
-				} else { // Boring ethernet
-					adapter.type = 'ethernet';
+				if (_.get(this.settings, 'net.iwconfig')) {
+					var wlan = _.find(this.iwconfig, {interface: adapter.interface });
+					if (wlan) { // Matching wlan adapter
+						adapter.type = 'wireless';
+						_.merge(adapter, wlan);
+					} else { // Boring ethernet
+						adapter.type = 'ethernet';
+					}
 				}
 				// }}}
 				// Match against ifSpeeds to provide bandwidth speeds {{{
@@ -85,12 +90,35 @@ module.exports = {
 	},
 	register: function(finish, parentStats) {
 		var settings = this.settings;
-		which('bwm-ng', function(err, binPath) {
-			if (err) { // If no binary - disable BWM-NG polling
-				parentStats.emit('debug', 'Binary `bwm-ng` is not in path - disabling bandwith statistics');
-				_.set(settings, 'net.bwmNg', false);
-			}
-			finish();
-		});
+		async()
+			.parallel([
+				function(next) {
+					which('ifconfig', function(err, binPath) {
+						if (err) { // If no binary - fail everything
+							return next('Binary `ifconfig` is not in path');
+						}
+						next();
+					});
+				},
+				function(next) {
+					which('iwconfig', function(err, binPath) {
+						if (err) { // If no binary - disable iwconfig polling
+							parentStats.emit('debug', 'Binary `iwconfig` is not in path - disabling wireless statistics');
+							_.set(settings, 'net.iwconfig', false);
+						}
+						next();
+					});
+				},
+				function(next) {
+					which('bwm-ng', function(err, binPath) {
+						if (err) { // If no binary - disable BWM-NG polling
+							parentStats.emit('debug', 'Binary `bwm-ng` is not in path - disabling bandwith statistics');
+							_.set(settings, 'net.bwmNg', false);
+						}
+						next();
+					});
+				},
+			])
+			.end(finish);
 	},
 };

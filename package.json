@@ -1,6 +1,6 @@
 {
   "name": "conkie-stats",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Cross-platform system-statistics (data gatherer for the Conkie project)",
   "main": "index.js",
   "bin": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hash-bang/Conkie-Stats.git"
+    "url": "git+https://github.com/hash-bang/conkie-stats.git"
   },
   "keywords": [
     "conkie",
@@ -23,9 +23,9 @@
   "author": "Matt Carter <m@ttcarter.com> (https://github.com/hash-bang)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hash-bang/Conkie-Stats/issues"
+    "url": "https://github.com/hash-bang/conkie-stats/issues"
   },
-  "homepage": "https://github.com/hash-bang/Conkie-Stats#readme",
+  "homepage": "https://github.com/hash-bang/conkie-stats#readme",
   "dependencies": {
     "async-chainable": "^1.7.15",
     "async-chainable-exec": "^1.3.0",

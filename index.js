@@ -1,9 +1,12 @@
 var _ = require('lodash');
 var async = require('async-chainable');
 var events = require('events');
+var fspath = require('path');
+var moduleFinder = require('module-finder');
 var util = require('util');
 
 // Modules that should be loaded on register() / register('*')
+// Modules installed as NPM modules (anything matching /^conkie-stats-/) will also be assumed
 var assumeAll = [
 	'cpu',
 	'disks',
@@ -34,12 +37,25 @@ function ConkieStats() {
 			.set('mods', _.flatten(Array.prototype.slice.call(arguments)))
 			.set('newMods', [])
 			.set('failedMods', [])
+			.then('npmModules', function(next) {
+				moduleFinder({
+					local: true,
+					global: true,
+					cwd: __dirname,
+					filter: {
+						name: /^conkie-stats-/,
+					},
+				}).then(function(res) {
+					next(null, res);
+				}, next);
+				// }}}
+			})
 			.then(function(next) {
 				if (
 					(!this.mods.length) ||
 					(this.mods.length == 1 && this.mods[0] == '*')
 				) { // Register all in assumeAll
-					this.mods = assumeAll;
+					this.mods = assumeAll.concat(this.npmModules.map(function(mod) { return mod.pkg.name }));
 					return next();
 				} else {
 					return next();
@@ -47,8 +63,16 @@ function ConkieStats() {
 			})
 			.forEach('mods', function(next, modName) {
 				try {
-					var mod = require(__dirname + '/modules/' + modName);
-					mod.name = modName;
+					var mod;
+					var npmMod = this.npmModules.find(function(mod) { return mod.pkg.name == modName });
+
+					if (npmMod) {
+						mod = require(fspath.dirname(npmMod.path));
+						mod.name = npmMod.pkg.name.replace(/^conkie-stats-/, '');
+					} else { // Load from local FS
+						mod = require(__dirname + '/modules/' + modName);
+						mod.name = modName;
+					}
 
 					// Merge in mod's settings (if any)
 					if (_.isObject(mod.settings)) {

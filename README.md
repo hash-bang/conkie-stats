@@ -34,11 +34,18 @@ Conkie-Stats is actually made up of a few chosen sub-modues. Ideally each sub-mo
 If you have any recommendations for either code commits or NPM modules please please submit a PR or [GitHub Issue](https://github.com/hash-bang/Conkie-Stats/issues).
 
 
+Plugins
+=======
+Conkie-Stats will automatically load all local or global NPM modules named `conkie-stats-*`. A simple NPM install should make these accessible to the main Conkie-Stats library.
+
+See the [NPMJS.com search](https://www.npmjs.com/search?q=conkie-stats) for more Conkie-Stats plugins.
+
+
 CLI
 ===
-Conkie-Stats also ships with a (very very very) basic Stats outputter.
+Conkie-Stats also ships with a (very very very) basic Stats outputter which can be accessed with:
 
-	conkie-stats
+	conkie-stats --help
 
 At present this doesn't realy do much expect spew the collected stats object to the screen in a loop every second.
 

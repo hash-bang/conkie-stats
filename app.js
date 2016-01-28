@@ -8,6 +8,7 @@
 var _ = require('lodash');
 var colors = require('colors');
 var conkieStats = require('./index');
+var filesize = require('filesize');
 var moment = require('moment');
 var program = require('commander');
 var util = require('util');
@@ -23,13 +24,21 @@ conkieStats
 	.on('update', function(stats) {
 		if (program.human) { // Convert some values to human readable
 			// Convert durations {{{
-			_.forEach(stats.power, function(dev) {
-				['remainingTime', 'remainingChargingTime'].forEach(function(k) {
-					if (!dev[k]) return;
-					var dur = moment.duration(dev[k], 'seconds');
-					dev[k] = dur.hours() + 'h ' + dur.minutes() + 'm ' + dur.seconds();
+			['power.0.remainingTime', 'power.0.remainingChargingTime']
+				.forEach(function(path) {
+					if (!_.has(stats, path)) return;
+
+					var dur = moment.duration(_.get(stats, path), 'seconds');
+
+					_.set(stats, path, dur.hours() + 'h ' + dur.minutes() + 'm ' + dur.seconds());
 				});
-			});
+			// }}}
+			// Convert sizes (base 10) {{{
+			['memory.total', 'memory.free', 'memory.used', 'memory.cache', 'memory.buffers']
+				.forEach(function(path) {
+					if (!_.has(stats, path)) return;
+					_.set(stats, path, filesize(_.get(stats, path), {base: 10}));
+				});
 			// }}}
 		}
 

@@ -61,6 +61,10 @@ function ConkieStats() {
 					return next();
 				}
 			})
+			.then(function(next) {
+				self.emit('debug', 'Using modules: ' + this.mods.join(', '));
+				next();
+			})
 			.forEach('mods', function(next, modName) {
 				try {
 					var mod;

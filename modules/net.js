@@ -75,7 +75,7 @@ module.exports = {
 
 				if (_.get(self.settings, 'net.ignoreDevice'))
 					this.adapters = this.adapters.filter(function(adapter) {
-						return (!_.contains(self.settings.net.ignoreDevice, adapter.interface));
+						return (!_.includes(self.settings.net.ignoreDevice, adapter.interface));
 					});
 
 				return next(null, this.adapters);

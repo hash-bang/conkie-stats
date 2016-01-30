@@ -48,7 +48,7 @@ module.exports = {
 						if (!disk) return false; // Invalid line read
 
 						// Skip mount types we are ignoring
-						if (settings.disks.ignoreTypes && _.contains(settings.disks.ignoreTypes, disk.type)) return false;
+						if (settings.disks.ignoreTypes && _.includes(settings.disks.ignoreTypes, disk.type)) return false;
 
 						// Skip mount point prefixes
 						if (settings.disks.ignoreMountPrefix && _.some(settings.disks.ignoreMountPrefix, function(prefix) {

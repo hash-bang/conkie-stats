@@ -33,8 +33,8 @@ module.exports = {
 					var self = this;
 					bwmNg.check(function(iface, bytesDown, bytesUp) {
 						bandwidthUsage[iface] = {
-							downSpeed: bytesDown,
-							upSpeed: bytesUp,
+							downSpeed: bytesDown * 100,
+							upSpeed: bytesUp * 100,
 						};
 					});
 					next();

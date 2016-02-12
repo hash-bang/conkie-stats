@@ -25,14 +25,14 @@ function ConkieStats() {
 	var self = this;
 	var mods = [];
 	var payload = {};
-	var _settings = {};
 	var _pollFreq = 1000;
 
 	// FIXME: unregister
 
-	this._settings = _settings;
+	self._settings = {};
+	self._userSettings = {}; // Holder for user specified settings via .settings() - needed as some modules may load AFTER a .settings() call
 
-	this.register = function(finish) {
+	self.register = function(finish) {
 		async()
 			.set('mods', _.flatten(Array.prototype.slice.call(arguments)))
 			.set('newMods', [])
@@ -84,7 +84,6 @@ function ConkieStats() {
 						mod.settings = self._settings; // Glue mod.settings to the main settings structure
 					}
 
-					// FIXME: Finish action currently doesnt wait for response / error
 					if (_.isFunction(mod.register)) {
 						mod.register(function(err) {
 							if (err) {
@@ -109,6 +108,12 @@ function ConkieStats() {
 				self.poll(next);
 			})
 			// }}}
+			// Merge user settings in with (probably) new settings structure {{{
+			.then(function(next) {
+				self.settings();
+				next();
+			})
+			// }}}
 			// Emit: ready {{{
 			.then(function(next) {
 				self.emit('ready');
@@ -122,12 +127,18 @@ function ConkieStats() {
 		return this;
 	};
 
-	this.settings = function(options) {
-		_.merge(this._settings, options);
+	/**
+	* Set the settings structure
+	* Since some modules may load after this has been called we keep two copies of the settings structure (_settings + _userSettings) and remerge after each .register() call
+	* @param object options The new settings structure that will be merged
+	*/
+	self.settings = function(options) {
+		_.merge(self._userSettings, options || {});
+		_.merge(self._settings, self._userSettings);
 		return this;
 	};
 
-	this.update = function(data) {
+	self.update = function(data) {
 		self.emit('updatePartial', data);
 		_.merge(payload, data, function(a, b, c) {
 			if (_.isArray(a)) return b; // Arrays are always taken in their entirety
@@ -138,14 +149,14 @@ function ConkieStats() {
 	};
 
 	var pollHandle;
-	this.setPollFreq = function(timeout) {
+	self.setPollFreq = function(timeout) {
 		clearTimeout(pollHandle); // Cancel scheduled polls
 		if (!_.isUndefined(timeout)) self._pollFreq = timeout;
 		pollHandle = setTimeout(self.poll, self._pollFreq);
 		return this;
 	};
 
-	this.poll = function(finish) {
+	self.poll = function(finish) {
 		clearTimeout(pollHandle); // Cancel scheduled polls
 
 		async()

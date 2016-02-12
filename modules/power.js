@@ -46,14 +46,14 @@ module.exports = {
 						.end(function(err) {
 							if (err) return next(err);
 							self.devices[index] = {
-								charge: parseInt(_.trimRight(this.charge)),
-								chargeFull: parseInt(_.trimRight(this.chargeFull)),
-								current: parseInt(_.trimRight(this.current)),
+								charge: parseInt(_.trimEnd(this.charge)),
+								chargeFull: parseInt(_.trimEnd(this.chargeFull)),
+								current: parseInt(_.trimEnd(this.current)),
 								device: dev,
-								manufacturer: _.trimRight(this.manufacturer),
-								model: _.trimRight(this.model),
-								status: _.trimRight(this.status).toLowerCase(),
-								voltage: parseInt(_.trimRight(this.voltage)),
+								manufacturer: _.trimEnd(this.manufacturer),
+								model: _.trimEnd(this.model),
+								status: _.trimEnd(this.status).toLowerCase(),
+								voltage: parseInt(_.trimEnd(this.voltage)),
 							};
 							// Post data calculations
 							self.devices[index].percent = _.round(self.devices[index].charge / self.devices[index].chargeFull * 100);

@@ -80,7 +80,7 @@ function ConkieStats() {
 
 					// Merge in mod's settings (if any)
 					if (_.isObject(mod.settings)) {
-						_.defaults(self._settings, mod.settings);
+						_.merge(self._settings, mod.settings);
 						mod.settings = self._settings; // Glue mod.settings to the main settings structure
 					}
 

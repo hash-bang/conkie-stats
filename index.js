@@ -140,7 +140,7 @@ function ConkieStats() {
 
 	self.update = function(data) {
 		self.emit('updatePartial', data);
-		_.merge(payload, data, function(a, b, c) {
+		_.mergeWith(payload, data, function(a, b, c) {
 			if (_.isArray(a)) return b; // Arrays are always taken in their entirety
 			return undefined;
 		});

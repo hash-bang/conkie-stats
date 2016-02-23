@@ -34,7 +34,7 @@
     "lodash": "^4.1.0",
     "module-finder": "^4.0.1",
     "which": "^1.2.1",
-    "wireless-tools": "git+https://github.com/hash-bang/wireless-tools.git"
+    "wireless-tools": "^0.15.0"
   },
   "devDependencies": {
     "chai": "^3.4.1",

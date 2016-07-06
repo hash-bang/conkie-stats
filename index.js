@@ -39,7 +39,7 @@ function ConkieStats() {
 			.set('failedMods', [])
 			.then('npmModules', function(next) {
 				moduleFinder({
-					local: true,
+					local: false, // Only set this to true if you are debugging conkie-stats locally
 					global: true,
 					cwd: __dirname,
 					filter: {

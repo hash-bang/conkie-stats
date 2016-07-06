@@ -29,8 +29,6 @@ describe('Conkie / Disks', function() {
 		expect(stats).to.have.property('disks');
 		expect(stats.disks).to.be.an.array;
 
-		console.log(stats.disks);
-
 		stats.disks.forEach(function(mount) {
 			expect(mount.filesystem).to.be.a.string;
 			expect(mount.type).to.be.a.string;

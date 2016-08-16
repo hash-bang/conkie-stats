@@ -19,7 +19,7 @@ module.exports = {
 				'-o%MEM',
 			])
 			.then('topMemory', function(next) {
-				var topSlicer = /^\s*([0-9]+)\s+(.+?)\s+([0-9\-]+)\s+([0-9\-]+)\s+([0-9]+)\s+([0-9]+)\s+([0-9]+)\s+(.)\s+([0-9\.]+)\s+([0-9\.]+)\s+([0-9\.:]+)\s+(.+)\s*$/;
+				var topSlicer = /^\s*([0-9]+)\s+(.+?)\s+([0-9\-]+)\s+([0-9\-]+)\s+([0-9.]+[kmgtpezy]?)\s+([0-9.]+[kmgtpezy]?)\s+([0-9.]+[kmgtpezy]?)\s+(.)\s+([0-9\.]+)\s+([0-9\.]+)\s+([0-9\.:]+)\s+(.+)\s*$/;
 				next(null, _(this.topOutput)
 					.map(function(line) { return line.split('\n') })
 					.flatten()

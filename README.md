@@ -179,7 +179,7 @@ The result should resemble the following:
 	]
 ```
 
-NOTE: As well as the above the key `dischargeAt` may also be provided. This is the last known JS date object at which the system had power and *usually* corresponds to the point where the device left the powered state. Since the operating system _does not_ track this information the discharge time is calculated by this module itself and may not correspond to the actual state change timestamp if the module is started *after* the power state change.
+NOTE: As well as the above the key `dischargeAt` may also be provided. This is the last known JS date object at which the system had power and *usually* corresponds to the point where the device left the powered state. Since the operating system _does not_ track this information the discharge time is calculated by this module itself and may not correspond to the actual state change timestamp if the module is started *after* the power state change. `dischargeTime` is also provided as the time since the state change in seconds.
 
 
 

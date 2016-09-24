@@ -100,7 +100,10 @@ module.exports = {
 						self.devices[index].watts = _.round((self.devices[index].current * self.devices[index].voltage) / 1000000000000, 1);
 
 						// Post state calculations
-						if (deviceStates[dev].dischargeAt) self.devices[index].dischargeAt = deviceStates[dev].dischargeAt;
+						if (deviceStates[dev].dischargeAt) {
+							self.devices[index].dischargeAt = deviceStates[dev].dischargeAt;
+							self.devices[index].dischargeTime = Math.round((Date.now() - deviceStates[dev].dischargeAt.getTime()) / 1000);
+						}
 
 						next();
 					});

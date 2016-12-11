@@ -5,28 +5,30 @@ Cross-platform system-statistics (data gatherer for the [Conkie](https://github.
 This module is designed to provide continiously updating system information - ideally in a cross-platform compatible way.
 
 
-	var conkieStats = require('conkie-stats');
-	conkieStats
-		.register([
-			'cpu',
-			'dropbox',
-			'io',
-			'memory',
-			'net',
-			'system',
-			'temperature',
-			'topCPU',
-			'topMemory',
-		])
-		.on('error', function(err) {
-			console.log('ERROR', err);
-		})
-		.on('debug', function(msg) {
-			console.log('DEBUG', msg);
-		})
-		.on('update', function(stats) {
-			console.log(stats);
-		});
+```javascript
+var conkieStats = require('conkie-stats');
+conkieStats
+	.register([
+		'cpu',
+		'dropbox',
+		'io',
+		'memory',
+		'net',
+		'system',
+		'temperature',
+		'topCPU',
+		'topMemory',
+	])
+	.on('error', function(err) {
+		console.log('ERROR', err);
+	})
+	.on('debug', function(msg) {
+		console.log('DEBUG', msg);
+	})
+	.on('update', function(stats) {
+		console.log(stats);
+	});
+```
 
 
 Conkie-Stats is actually made up of a few chosen sub-modues. Ideally each sub-module should be cross-platform (hard), sane (harder) and reliable (hardest still).
@@ -73,7 +75,6 @@ Installation
 	sudo apt-get install bwm-ng lm-sensors iotop
 
 
-
 Provided data
 =============
 
@@ -91,17 +92,17 @@ A collection (array of objects) of all active mounted disks within the system.
 
 The result should resemble the following:
 
-```
-	[
-		{
-			filesystem: '/dev/sdb7',
-			type: 'ext4',
-			blocks: '63384396',
-			used: '35256768',
-			free: '24891532',
-			mount: '/',
-		},
-	]
+```json
+[
+	{
+		filesystem: '/dev/sdb7',
+		type: 'ext4',
+		blocks: '63384396',
+		used: '35256768',
+		free: '24891532',
+		mount: '/',
+	},
+]
 ```
 
 
@@ -113,25 +114,30 @@ This module is not auto-loaded (e.g. via `register('*')`) and needs manual setti
 
 Specify each file return value as the key and the file path as the value of the `files` settings object:
 
-	conkieStats.settings({
-		files: {
-			wagesPerHour: '/home/joerandom/wages',
-			widgetsPerFoobar: '/tmp/foobar',
-		},
-	});
+
+```javascript
+conkieStats.settings({
+	files: {
+		wagesPerHour: '/home/joerandom/wages',
+		widgetsPerFoobar: '/tmp/foobar',
+	},
+});
+```
 
 Assuming those files exist this should create the structure as the output stats:
 
-	{
-		files: {
-			wagesPerHour: [100],
-			widgetsPerFoobar: [
-				'foo',
-				'bar',
-				'baz',
-			],
-		},
-	}
+```json
+{
+	files: {
+		wagesPerHour: [100],
+		widgetsPerFoobar: [
+			'foo',
+			'bar',
+			'baz',
+		],
+	},
+}
+```
 
 **NOTES**
 
@@ -163,20 +169,20 @@ A collection (array of objects) of all active power sub-systems. These usually c
 
 The result should resemble the following:
 
-```
-	[
-		{
-			charge: 2628000
-			chargeFull: 4412000,
-			device: 'BAT0',
-			manufacturer: 'MSI',
-			percent: 59,
-			model: 'BIF0_9',
-			status: 'charging', // charging, discharging
-			voltage: 10934000,
-			remainingTime: 3809.2470277410835, // Remaining time in seconds
-		},
-	]
+```json
+[
+	{
+		charge: 2628000
+		chargeFull: 4412000,
+		device: 'BAT0',
+		manufacturer: 'MSI',
+		percent: 59,
+		model: 'BIF0_9',
+		status: 'charging', // charging, discharging
+		voltage: 10934000,
+		remainingTime: 3809.2470277410835, // Remaining time in seconds
+	},
+]
 ```
 
 NOTE: As well as the above the key `dischargeAt` may also be provided. This is the last known JS date object at which the system had power and *usually* corresponds to the point where the device left the powered state. Since the operating system _does not_ track this information the discharge time is calculated by this module itself and may not correspond to the actual state change timestamp if the module is started *after* the power state change. `dischargeTime` is also provided as the time since the state change in seconds.
@@ -203,44 +209,44 @@ If `bwm-ng` is installed the `downSpeed` / `upSpeed` properties are also provide
 
 The result should resemble the following:
 
-```
-	[
-		{
-			type: 'ethernet',
-			interface: 'lo',
-			link: 'local',
-			ipv6_address: '::1/128',
-			ipv4_address: '127.0.0.1',
-			ipv4_subnet_mask: '255.0.0.0',
-			up: true,
-			running: true,
-			loopback: true,
-			downSpeed: 0,
-			upSpeed: 0,
-		},
-		{
-			type: 'wireless',
-			interface: 'wlp3s0',
-			link: 'ethernet',
-			address: '66:66:66:66:66:66',
-			ipv6_address: '6666::6666:6666:6666:6666/64',
-			ipv4_address: '192.168.1.1',
-			ipv4_broadcast: '192.168.1.255',
-			ipv4_subnet_mask: '255.255.255.0',
-			up: true,
-			broadcast: true,
-			running: true,
-			multicast: true,
-			access_point: '66:66:66:66:66:67',
-			frequency: 2.462,
-			ieee: '802.11abgn',
-			mode: 'managed',
-			quality: 70,
-			ssid: 'My WiFi point',
-			downSpeed: 0,
-			upSpeed: 0,
-		}
-	]
+```json
+[
+	{
+		type: 'ethernet',
+		interface: 'lo',
+		link: 'local',
+		ipv6_address: '::1/128',
+		ipv4_address: '127.0.0.1',
+		ipv4_subnet_mask: '255.0.0.0',
+		up: true,
+		running: true,
+		loopback: true,
+		downSpeed: 0,
+		upSpeed: 0,
+	},
+	{
+		type: 'wireless',
+		interface: 'wlp3s0',
+		link: 'ethernet',
+		address: '66:66:66:66:66:66',
+		ipv6_address: '6666::6666:6666:6666:6666/64',
+		ipv4_address: '192.168.1.1',
+		ipv4_broadcast: '192.168.1.255',
+		ipv4_subnet_mask: '255.255.255.0',
+		up: true,
+		broadcast: true,
+		running: true,
+		multicast: true,
+		access_point: '66:66:66:66:66:67',
+		frequency: 2.462,
+		ieee: '802.11abgn',
+		mode: 'managed',
+		quality: 70,
+		ssid: 'My WiFi point',
+		downSpeed: 0,
+		upSpeed: 0,
+	}
+]
 ```
 
 

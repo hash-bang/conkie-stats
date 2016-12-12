@@ -181,14 +181,32 @@ function ConkieStats() {
 		return this;
 	};
 
-	self.poll = function(finish) {
+
+	/**
+	* Trigger a poll event for all modules that require it
+	* NOTE: Unless force==true this function will also check settings.pollFrequency.MODNAME to determine if the module is due to be polled
+	* @param {function} finish Callback to fire post poll
+	* @param {boolean} [force=false] Whether to force the poll (ignore any per-module pollFrequencies)
+	* @fires update Fired whenever the data structure gets updated
+	* @return {Object} This chainable object
+	*/
+	self.poll = function(finish, force) {
 		clearTimeout(pollHandle); // Cancel scheduled polls
 
 		async()
 			.forEach(mods, function(next, mod) {
 				if (!mod.poll) return next();
+
+				if (
+					!force && // Not being forced
+					_.has(self, ['_settings', 'pollFrequency', mod.name]) && // Has a pollFrequency for this module
+					mod.lastPoll && // Has a last poll event
+					mod.lastPoll + _.get(self, ['_settings', 'pollFrequency', mod.name]) > Date.now() // Not due to update yet
+				) return next();
+
 				mod.poll(function(err, payload) {
 					if (err) return next(err);
+					mod.lastPoll = Date.now();
 					if (payload) self.update(payload);
 					next();
 				});

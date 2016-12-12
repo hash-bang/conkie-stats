@@ -199,12 +199,13 @@ If `bwm-ng` is installed the `downSpeed` / `upSpeed` properties are also provide
 
 ##Settings##
 
-| Option                | Type      | Default      | Description |
-| ----------------------|-----------|--------------|-------------|
-| net.bwmNg             | Boolean   | `true`       | Use `bwm-ng` to gather bandwidth stats. If the binary cannot be found when the module is registered this is automatically disabled |
-| net.ignoreNoBandwidth | Boolean   | `false`      | Remove all network devices that dont have any download or upload - not recommended as it tends to remove devices during a quiet period |
-| net.ignoreNoIP        | Boolean   | `false`      | Remove all network devices that currently have no IP address |
-| net.ignoreDevice      | Array     | `[]`         | Ignore all devices by device name (e.g. `lo` to ignore loopback adapater on Linux)
+| Option                  | Type      | Default      | Description |
+|-------------------------|-----------|--------------|-------------|
+| `pollFrequency`         | Object    | `{}`         | Specifiers for the delay per module. e.g. `pollFrequency.cpu=5000` will only poll the CPU module every 5000ms reguardless of what the overall poll frequency is
+| `net.bwmNg`             | Boolean   | `true`       | Use `bwm-ng` to gather bandwidth stats. If the binary cannot be found when the module is registered this is automatically disabled
+| `net.ignoreNoBandwidth` | Boolean   | `false`      | Remove all network devices that dont have any download or upload - not recommended as it tends to remove devices during a quiet period
+| `net.ignoreNoIP`        | Boolean   | `false`      | Remove all network devices that currently have no IP address
+| `net.ignoreDevice`      | Array     | `[]`         | Ignore all devices by device name (e.g. `lo` to ignore loopback adapater on Linux)
 
 
 The result should resemble the following:

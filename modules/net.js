@@ -31,13 +31,14 @@ module.exports = {
 				bandwidth: function(next) {
 					if (!_.get(this.settings, 'net.bwmNg')) return next();
 					var self = this;
+					var nextOnce = _.once(next);
 					bwmNg.check(function(iface, bytesDown, bytesUp) {
 						bandwidthUsage[iface] = {
 							downSpeed: bytesDown * 100,
 							upSpeed: bytesUp * 100,
 						};
+						nextOnce();
 					});
-					next();
 				},
 			})
 			.forEach('adapters', function(next, adapter) {

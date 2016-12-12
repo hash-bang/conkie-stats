@@ -32,6 +32,17 @@ function ConkieStats() {
 	self._settings = {};
 	self._userSettings = {}; // Holder for user specified settings via .settings() - needed as some modules may load AFTER a .settings() call
 
+
+	/**
+	* Register one or more modules
+	* @param {function} finish Callback to run after the stated modules have been registered
+	* @param {array|string} [module...] The module or modules to register, this function can be called multiple times
+	* @fires debug Debug message fired when loading modules or if the module returns an error
+	* @fires moduleRegister Fired when a individual module successfully registers
+	* @fires ready Fired when all modules have loaded
+	* @fires error Fired when any error occurs
+	* @return {Object} This chainable object
+	*/
 	self.register = function(finish) {
 		async()
 			.set('mods', _.flatten(Array.prototype.slice.call(arguments)))
@@ -127,10 +138,12 @@ function ConkieStats() {
 		return this;
 	};
 
+
 	/**
 	* Set the settings structure
 	* Since some modules may load after this has been called we keep two copies of the settings structure (_settings + _userSettings) and remerge after each .register() call
-	* @param object options The new settings structure that will be merged
+	* @param {Object} options The new settings structure that will be merged
+	* @return {Object} This chainable object
 	*/
 	self.settings = function(options) {
 		_.merge(self._userSettings, options || {});
@@ -138,6 +151,13 @@ function ConkieStats() {
 		return this;
 	};
 
+
+	/**
+	* Merge a data structure with the current data payload
+	* @param {Object} data The incomming data to merge
+	* @fires updatePartial Fired whenever data gets merged
+	* @return {Object} This chainable object
+	*/
 	self.update = function(data) {
 		self.emit('updatePartial', data);
 		_.mergeWith(payload, data, function(a, b, c) {
@@ -149,6 +169,11 @@ function ConkieStats() {
 	};
 
 	var pollHandle;
+	/**
+	* Set the overall module poll frequency
+	* This can be overriden for individual modules via settings.pollFrequency.MODULE_NAME
+	* @return {Object} This chainable object
+	*/
 	self.setPollFreq = function(timeout) {
 		clearTimeout(pollHandle); // Cancel scheduled polls
 		if (!_.isUndefined(timeout)) self._pollFreq = timeout;

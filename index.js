@@ -207,7 +207,10 @@ function ConkieStats() {
 				mod.poll(function(err, payload) {
 					if (err) return next(err);
 					mod.lastPoll = Date.now();
-					if (payload) self.update(payload);
+					if (payload) {
+						_.set(payload, ['lastUpdate', mod.name], mod.lastPoll);
+						self.update(payload);
+					}
 					next();
 				});
 			})

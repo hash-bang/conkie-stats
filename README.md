@@ -154,6 +154,12 @@ The IO object is made up of several values:
 * `io.totalWrite` - The system-wide disk write I/O value in Kbs
 
 
+`lastUpdate`
+------------
+An object of when the modules were last polled.
+Each key is the module name and the value is the Unix timestamp (in milliseconds).
+
+
 `memory`
 --------
 Various Memory related information.

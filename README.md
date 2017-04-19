@@ -10,6 +10,7 @@ var conkieStats = require('conkie-stats');
 conkieStats
 	.register([
 		'cpu',
+		'commands',
 		'dropbox',
 		'io',
 		'memory',
@@ -84,6 +85,41 @@ Various CPU related information.
 
 * `cpu.usage` - Integer representing the CPU usage
 * `cpu.load` - A three part array listing the 1, 5 and 15 minute load readings as floats
+
+
+`commands`
+----------
+Run any system command and return the response as a string or an array of strings.
+
+This module requires the commands to run to be specified as an object in its settings.
+
+For example:
+
+```javascript
+conkieStats.settings({
+	commands: {
+		echo: 'echo Hello World',
+		uptime: 'uptime',
+		ls: ['ls', '-l', '-a'],
+	},
+});
+```
+
+would return something like:
+
+```json
+{
+	"echo": "Hello World",
+	"uptime": "12:33:29 up 15:12,  4 users,  load average: 2.28, 2.45, 2.21",
+	"ls": [
+		"drwxrwxr-x   6 user user  4096 Apr 19 12:30 ./",
+		"drwxrwxr-x 117 user user  4096 Apr 19 08:49 ../"
+	]
+}
+```
+
+
+Commands can be specified in any of the formats supported by [async-chainable-exec](https://github.com/hash-bang/async-chainable-exec) - the most common being a simple string or an array of strings forming the arguments.
 
 
 `disks`

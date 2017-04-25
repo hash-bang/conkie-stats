@@ -22,7 +22,15 @@ module.exports = {
                         status: stat
                     }
                 });
+            })
+            .on('PositionChanged', function (position) {
+                parentStats.update({
+                    mpris: {
+                        position: position
+                    }
+                });
             });
+        // TODO : other listener can be add, see https://specifications.freedesktop.org/mpris-spec/latest/
 
         mpris.connect(this.settings.mpris.player, function(err) {
 

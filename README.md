@@ -235,21 +235,28 @@ A collection of metadata about media played in specified soft.
 
 The result should resemble the following:
 ```json
-{ 'mpris:trackid': '/org/videolan/vlc/playlist/4',
-        'xesam:url': 'file:///Data/Music/myArtist/mySound.flac',
-        'xesam:title': 'Music of Space',
-        'xesam:artist': [ 'My Sound' ],
-        'xesam:album': 'Artist Space',
-        'xesam:tracknumber': '1',
-        'vlc:time': 314,
-        'mpris:length': 314862583,
-        'xesam:genre': [ 'Electro' ],
-        'xesam:contentCreated': '2005',
-        'mpris:artUrl': 'file:///Data/Music/myArtist/cover.jpg',
-        'vlc:length': 314862,
-        'vlc:publisher': 5 },
-     status: 'Playing' },
+{
+     meta: { 
+         'mpris:trackid': '/org/videolan/vlc/playlist/4',
+         'xesam:url': 'file:///Data/Music/myArtist/mySound.flac',
+         'xesam:title': 'Music of Space',
+         'xesam:artist': [ 'My Sound' ],
+         'xesam:album': 'Artist Space',
+         'xesam:tracknumber': '1',
+         'vlc:time': 314,
+         'mpris:length': 314862583,
+         'xesam:genre': [ 'Electro' ],
+         'xesam:contentCreated': '2005',
+         'mpris:artUrl': 'file:///Data/Music/myArtist/cover.jpg',
+         'vlc:length': 314862,
+         'vlc:publisher': 5 
+     },
+    status: 'Playing' ,
+    position: 255396000
+}
 ```
+
+`Position` and `mpris:length` it's given in microseconds. See [MPRIS Doc](https://specifications.freedesktop.org/mpris-spec/latest/Player_Interface.html#Property:Position) for mor detail. 
 
 The player can be chosen with:
 ```json

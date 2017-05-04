@@ -204,9 +204,9 @@ function ConkieStats() {
 					mod.lastPoll + _.get(self, ['_settings', 'pollFrequency', mod.name]) > Date.now() // Not due to update yet
 				) return next();
 
+				mod.lastPoll = Date.now(); // Mark that we are polling NOW to prevent new async threads jumping in
 				mod.poll(function(err, payload) {
 					if (err) return next(err);
-					mod.lastPoll = Date.now();
 					if (payload) {
 						_.set(payload, ['lastUpdate', mod.name], mod.lastPoll);
 						self.update(payload);

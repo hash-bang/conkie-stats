@@ -229,41 +229,7 @@ The result should resemble the following:
 
 NOTE: As well as the above the key `dischargeAt` may also be provided. This is the last known JS date object at which the system had power and *usually* corresponds to the point where the device left the powered state. Since the operating system _does not_ track this information the discharge time is calculated by this module itself and may not correspond to the actual state change timestamp if the module is started *after* the power state change. `dischargeTime` is also provided as the time since the state change in seconds.
 
-`mpris`
------
-A collection of metadata about media played in specified soft.
 
-The result should resemble the following:
-```json
-{
-     meta: { 
-         'mpris:trackid': '/org/videolan/vlc/playlist/4',
-         'xesam:url': 'file:///Data/Music/myArtist/mySound.flac',
-         'xesam:title': 'Music of Space',
-         'xesam:artist': [ 'My Sound' ],
-         'xesam:album': 'Artist Space',
-         'xesam:tracknumber': '1',
-         'vlc:time': 314,
-         'mpris:length': 314862583,
-         'xesam:genre': [ 'Electro' ],
-         'xesam:contentCreated': '2005',
-         'mpris:artUrl': 'file:///Data/Music/myArtist/cover.jpg',
-         'vlc:length': 314862,
-         'vlc:publisher': 5 
-     },
-    status: 'Playing' ,
-    position: 255396000
-}
-```
-
-`Position` and `mpris:length` it's given in microseconds. See [MPRIS Doc](https://specifications.freedesktop.org/mpris-spec/latest/Player_Interface.html#Property:Position) for mor detail. 
-
-The player can be chosen with:
-```json
-mpris {
-  player: 'vlc'
-}
-```
 
 `net`
 -----
@@ -273,7 +239,7 @@ Most network interfaces are populated via `ipconfig` but wireless devices have t
 
 If `bwm-ng` is installed the `downSpeed` / `upSpeed` properties are also provided.
 
-## Settings##
+##Settings##
 
 | Option                  | Type      | Default      | Description |
 |-------------------------|-----------|--------------|-------------|

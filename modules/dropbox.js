@@ -4,6 +4,11 @@ var asyncExec = require('async-chainable-exec');
 var which = require('which');
 
 module.exports = {
+	settings: {
+		pollFrequency: {
+			io: 1 * 1000,
+		},
+	},
 	poll: function(finish) {
 		async()
 			.use(asyncExec)

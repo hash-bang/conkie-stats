@@ -6,6 +6,9 @@ var which = require('which');
 module.exports = {
 	settings: {
 		topProcessCount: 5,
+		pollFrequency: {
+			topCPU: 1 * 1000,
+		},
 	},
 	poll: function(finish) {
 		var settings = this.settings;

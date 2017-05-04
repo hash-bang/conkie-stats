@@ -25,11 +25,13 @@ function ConkieStats() {
 	var self = this;
 	var mods = [];
 	var payload = {};
-	var _pollFreq = 1000;
+	self._pollFreq = 1000;
 
 	// FIXME: unregister
 
-	self._settings = {};
+	self._settings = {
+		pollFrequency: {},
+	};
 	self._userSettings = {}; // Holder for user specified settings via .settings() - needed as some modules may load AFTER a .settings() call
 
 
@@ -172,11 +174,13 @@ function ConkieStats() {
 	/**
 	* Set the overall module poll frequency
 	* This can be overriden for individual modules via settings.pollFrequency.MODULE_NAME
+	* NOTE: Calling this function also forces a poll refresh
+	* @param {number|undefined} timeout The new minimum timeout to use
 	* @return {Object} This chainable object
 	*/
 	self.setPollFreq = function(timeout) {
 		clearTimeout(pollHandle); // Cancel scheduled polls
-		if (!_.isUndefined(timeout)) self._pollFreq = timeout;
+		self._pollFreq = _.isEmpty(timeout) ? 0 : timeout;
 		pollHandle = setTimeout(self.poll, self._pollFreq);
 		return this;
 	};
@@ -215,9 +219,19 @@ function ConkieStats() {
 				});
 			})
 			.end(function(err) {
+				// Tell upstream eventEmitter that we've finished
 				self.emit('update', payload);
-				// Reschedule
-				pollHandle = setTimeout(self.poll, self._pollFreq);
+
+				// Calculate minimum amount of time to sleep {{{
+				var frequencies = _.values(self._settings.pollFrequency);
+				if (self._pollFreq > 0) frequencies.push(self._pollFreq); // Include the minimum if we have one
+
+				var minTimeout;
+				minTimeout = Math.min(frequencies);
+				if (minTimeout === Infinity) minTimeout = 0; // Infinity actually means we dont have any idea - so refresh on next tick
+				// }}}
+
+				pollHandle = setTimeout(self.poll, minTimeout);
 				if (_.isFunction(finish)) finish(err);
 			});
 

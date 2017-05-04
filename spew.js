@@ -15,6 +15,9 @@ conkieStats
 		net: {
 			ignoreNoIP: true,
 		},
+        mpris: {
+            player: 'vlc',
+        },
 	})
 	.on('error', function(err) {
 		console.log(colors.red('ERROR', err));

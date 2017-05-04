@@ -33,6 +33,7 @@
     "cpu-usage": "^0.1.0",
     "lodash": "^4.17.4",
     "module-finder": "git+https://github.com/hash-bang/module-finder.git",
+    "mpris": "0.0.2",
     "which": "^1.2.14",
     "wireless-tools": "git+https://github.com/hash-bang/wireless-tools.git"
   },

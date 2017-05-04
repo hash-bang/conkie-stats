@@ -239,6 +239,91 @@ Most network interfaces are populated via `ipconfig` but wireless devices have t
 
 If `bwm-ng` is installed the `downSpeed` / `upSpeed` properties are also provided.
 
+`RSS / Atom`
+------------
+A collection (object) of all feed getting from one or more sources.
+
+Specify each url you want to get feed as the value of the `feedRSSAtom.url` settings object:
+
+```javascript
+conkieStats.settings({
+	feedRSSAtom: {
+        options: {
+            followRedirect: false, // default value
+            timeout: 1000 // default value
+        },
+        sortByDate: 'desc', // values : asc,desc,off | default: desc
+        url: [ // default empty
+            'http://www.one-website.com/',
+            'http://www.another-website.io/',
+        ],
+    }
+});
+```
+
+*Node: The options hash is passed through to [request](https://github.com/request/request) for fetching a given url.*
+
+The result should resemble the following:
+
+```json
+{
+  "sources": [
+    {
+      "type": "rss",
+      "metadata": {
+        "title": "one-website.com",
+        "desc": "",
+        "url": "http:\/\/www.one-website.com\/",
+        "lastBuildDate": "Thu, 04 May 2017 13:36:03 -0700",
+        "update": "Thu, 04 May 2017 13:36:03 -0700"
+      }
+    },
+    {
+      "type": "atom",
+      "metadata": {
+        "title": "another-website.io",
+        "desc": "",
+        "url": "http:\/\/www.another-website.io\/",
+        "lastBuildDate": "Thu, 04 May 2017 13:36:03 -0700",
+        "update": "Thu, 04 May 2017 13:36:03 -0700"
+      }
+     }
+  ],
+  "feeds": [
+    {
+      "title": "Conkie, a Conky like",
+      "desc": "<p>Conkie...<\/p>",
+      "link": "http:\/\/one-website.com\/conkie-a-conky-like-42.html",
+      "category": [
+        
+      ],
+      "date": 1493841600000,
+      "feed": 0
+    },
+    {
+      "title": "Lorem ipsum",
+      "desc": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua<\/p>",
+      "link": "http:\/\/one-website.com\/lorem-ipsum.html",
+      "category": [
+        
+      ],
+      "date": 1493838000000,
+      "feed": 0
+    },
+    {
+      "title": "Hello world",
+      "desc": "<p>Simple: 01001000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100 01100100 !<\/p>",
+      "link": "http:\/\/another-website.io\/hello-world.html",
+      "category": [
+        
+      ],
+      "date": 1493834400000,
+      "feed": 1
+    }
+  ]
+}
+```
+
 ##Settings##
 
 | Option                  | Type      | Default      | Description |
@@ -343,6 +428,26 @@ Collection of Top Memory using processes.
 
 See the output of [topCPU](#topcpu) for a description of each field.
 
+`RSS / Atom`
+------------
+
+Collection of sources.
+
+* `feedRSSAtom.sources` - An array of sources website info
+    * `feedRSSAtom.metadata` - Colletion of info about site
+        * `feedRSSAtom.metadata.desc` - String that describe site
+        * `feedRSSAtom.metadata.lastBuildDate` - Number (timestamp), contain last build date
+        * `feedRSSAtom.metadata.title` - Site title 
+        * `feedRSSAtom.metadata.update` - Number (timestamp), contain last update date
+        * `feedRSSAtom.metadata.url` - String, website URL
+    * `feedRSSAtom.type` - Indicate if feeds are RSS or Atom 
+* `feedRSSAtom.feeds` - An array of all sources
+    * `feedRSSAtom.feeds.category` - Array of string that describe feed category
+    * `feedRSSAtom.feeds.date` - Number (timestamp), Publication date
+    * `feedRSSAtom.feeds.desc` - String, description of feed (*Note: can be huge because can contain full article*)
+    * `feedRSSAtom.feeds.source` - Number, index of source in `feedRSSAtom.sources`
+    * `feedRSSAtom.feeds.link` - String, link of article
+    * `feedRSSAtom.feeds.title` - String, title of article
 
 API
 ===

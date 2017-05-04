@@ -15,6 +15,11 @@ conkieStats
 		net: {
 			ignoreNoIP: true,
 		},
+        feedRSSAtom: {
+            url: [
+            	'http://feeds.feedburner.com/linuxtoday/linux?format=xml'
+            ],
+        },
 	})
 	.on('error', function(err) {
 		console.log(colors.red('ERROR', err));

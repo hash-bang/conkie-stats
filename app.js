@@ -50,11 +50,16 @@ conkieStats
 program
 	.option('-h, --human', 'Try to be helpful with certain values (converts times to human readable on certain outputs')
 	.option('-m, --module [mod...]', 'Specify a module to use (if omitted all are used)', function(item, value) { value.push(item); return value; }, [])
-	.option('-r, --refresh [ms]', 'Refresh interval for polling modules in milliseconds', 1000)
+	.option('-r, --refresh [ms]', 'Refresh interval for polling modules in milliseconds')
 	.option('-s, --settings [json]', 'Specify a settings object')
+	.option('--no-force', 'Do not force a refresh, use the modules recommended refresh rates')
 	.parse(process.argv);
 
-conkieStats.setPollFreq(program.refresh);
+if (program.refresh) {
+	conkieStats.setPollFreq(program.refresh);
+} else if (program.force === false) {
+	conkieStats.setPollFreq();
+}
 
 // -m, --module [mods,...] {{{
 if (program.module) {

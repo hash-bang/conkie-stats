@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var async = require('async-chainable');
 var events = require('events');
+var fs = require('fs');
 var fspath = require('path');
 var moduleFinder = require('module-finder');
 var util = require('util');
@@ -38,7 +39,7 @@ function ConkieStats() {
 	/**
 	* Register one or more modules
 	* @param {function} finish Callback to run after the stated modules have been registered
-	* @param {array|string} [module...] The module or modules to register, this function can be called multiple times
+	* @param {array|string} [module...] The module or modules to register, this function can be called multiple times. Each item can be a file in ./modules/NAME.js, an NPM module name (installed on the system globally) or a path to a JS file which provides the module definition.
 	* @fires debug Debug message fired when loading modules or if the module returns an error
 	* @fires moduleRegister Fired when a individual module successfully registers
 	* @fires ready Fired when all modules have loaded
@@ -86,10 +87,15 @@ function ConkieStats() {
 					if (npmMod) {
 						mod = require(fspath.dirname(npmMod.path));
 						mod.name = npmMod.pkg.name.replace(/^conkie-stats-/, '');
-					} else { // Load from local FS
-						mod = require(__dirname + '/modules/' + modName);
+					} else if (! _.attempt(fs.accessSync.bind(this, modName))) { // Is the file a resolvable path?
+						mod = require(modName);
+					} else if (! _.attempt(fs.accessSync.bind(this, __dirname + '/modules/' + modName + '.js'))) { // Load from local FS
+						mod = require(__dirname + '/modules/' + modName + '.js');
 						mod.name = modName;
+					} else {
+						return next('Unknown module "' + modName + '" - this is not an NPM, internal module or readable path');
 					}
+
 
 					// Merge in mod's settings (if any)
 					if (_.isObject(mod.settings)) {
@@ -113,7 +119,7 @@ function ConkieStats() {
 						next();
 					}
 				} catch (e) {
-					next('Error registering module "' + mod + '" - ' + e.toString());
+					next('Error registering module "' + (mod || modName) + '" - ' + e.toString());
 				}
 			})
 			// Force poll all modules {{{

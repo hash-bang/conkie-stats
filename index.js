@@ -227,7 +227,7 @@ function ConkieStats() {
 				if (self._pollFreq > 0) frequencies.push(self._pollFreq); // Include the minimum if we have one
 
 				var minTimeout;
-				minTimeout = Math.min(frequencies);
+				minTimeout = Math.min.apply(this, frequencies);
 				if (minTimeout === Infinity) minTimeout = 0; // Infinity actually means we dont have any idea - so refresh on next tick
 				// }}}
 

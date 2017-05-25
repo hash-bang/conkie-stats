@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss2full.xsl"?><?xml-stylesheet type="text/css" media="screen" href="http://sources.feedburner.com/~d/styles/itemcontent.css"?>
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" version="2.0">
+  <channel>
+    <title><![CDATA[Linuxtoday.com]]></title>
+    <link>http://www.linuxtoday.com/</link>
+    <description />
+    <pubDate>Thu, 04 May 2017 11:18:55 -0700</pubDate>
+    <lastBuildDate>Thu, 04 May 2017 11:18:55 -0700</lastBuildDate>
+    <managingEditor>info@quinstreet.com</managingEditor>
+    <generator>Zend_Feed</generator>
+    <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+    <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://feeds.feedburner.com/linuxtoday/linux" /><feedburner:info uri="linuxtoday/linux" /><atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/" /><item>
+      <title><![CDATA[An Simple Way to Access/Setup Google Drive in Linux]]></title>
+      <link>http://feedproxy.google.com/~r/linuxtoday/linux/~3/8M3Xw7kBdo4/an-simple-way-to-accesssetup-google-drive-in-linux-170503054510.html</link>
+      <description><![CDATA[<p>Linux users can easily access/setup google drive in Linux completely free of cost through the Nautilus file manager.</p>]]></description>
+      <pubDate>Wed, 03 May 2017 13:00:00 -0700</pubDate>
+    <feedburner:origLink>http://www.linuxtoday.com/storage/an-simple-way-to-accesssetup-google-drive-in-linux-170503054510.html</feedburner:origLink></item>
+    <item>
+      <title><![CDATA[How To Split And Combine Files From Command Line In Linux]]></title>
+      <link>http://feedproxy.google.com/~r/linuxtoday/linux/~3/vBAQs6640ng/how-to-split-and-combine-files-from-command-line-in-linux-170503065508.html</link>
+      <description><![CDATA[<p>Split large files into multiple smaller files, and combine them later in Unix-like operating systems.</p>]]></description>
+      <pubDate>Wed, 03 May 2017 12:00:00 -0700</pubDate>
+    <feedburner:origLink>http://www.linuxtoday.com/infrastructure/how-to-split-and-combine-files-from-command-line-in-linux-170503065508.html</feedburner:origLink></item>
+    <item>
+      <title><![CDATA[How to Turn Any Website into an App on Linux]]></title>
+      <link>http://feedproxy.google.com/~r/linuxtoday/linux/~3/A_d6_W6hR8w/how-to-turn-any-website-into-an-app-on-linux-170502191514.html</link>
+      <description><![CDATA[<p>MakeTechEasier: Instead of visiting a website on a browser, you can turn it into a web app and launch it like an app.</p>]]></description>
+      <pubDate>Wed, 03 May 2017 11:00:00 -0700</pubDate>
+    <feedburner:origLink>http://www.linuxtoday.com/infrastructure/how-to-turn-any-website-into-an-app-on-linux-170502191514.html</feedburner:origLink></item>
+    <item>
+      <title><![CDATA[Installing Google Play Store on the Asus Tinker Board]]></title>
+      <link>http://feedproxy.google.com/~r/linuxtoday/linux/~3/bbVEbNmXYwA/installing-google-play-store-on-the-asus-tinker-board-170501050511.html</link>
+      <description><![CDATA[<p>OSSblog: This walk-through explains how to install the Play Store on the Tinker Board.</p>]]></description>
+      <pubDate>Wed, 03 May 2017 10:00:00 -0700</pubDate>
+    <feedburner:origLink>http://www.linuxtoday.com/developer/installing-google-play-store-on-the-asus-tinker-board-170501050511.html</feedburner:origLink></item>
+    <item>
+      <title><![CDATA[How to Install cPanel and WHM in CentOS 7]]></title>
+      <link>http://feedproxy.google.com/~r/linuxtoday/linux/~3/F3A-tMrer8s/how-to-install-cpanel-and-whm-in-centos-7-170501042039.html</link>
+      <description><![CDATA[<p>cPanel is a well known, most reliable and intuitive commercial control panel for web hosting services.</p>]]></description>
+      <pubDate>Wed, 03 May 2017 09:00:00 -0700</pubDate>
+    <feedburner:origLink>http://www.linuxtoday.com/high_performance/how-to-install-cpanel-and-whm-in-centos-7-170501042039.html</feedburner:origLink></item>
+    <item>
+      <title><![CDATA[Awesome way to improve process monitoring: Install htop Linux on RHEL, Ubuntu and fedora.]]></title>
+      <link>http://feedproxy.google.com/~r/linuxtoday/linux/~3/2dZe4iYIUPU/awesome-way-to-improve-process-monitoring-install-htop-linux-on-rhel-ubuntu-and-fedora.-170501011512.html</link>
+      <description><![CDATA[<p>There is a colourful yet interactive utility in Linux, called as htop.</p>]]></description>
+      <pubDate>Wed, 03 May 2017 08:00:00 -0700</pubDate>
+    <feedburner:origLink>http://www.linuxtoday.com/infrastructure/awesome-way-to-improve-process-monitoring-install-htop-linux-on-rhel-ubuntu-and-fedora.-170501011512.html</feedburner:origLink></item>
+    <item>
+      <title><![CDATA[Canonical Developer Works on Bringing Snap Support to Raspberry Pi's Raspbian]]></title>
+      <link>http://feedproxy.google.com/~r/linuxtoday/linux/~3/agvuPk4Vxek/canonical-developer-works-on-bringing-snap-support-to-raspberry-pis-raspbian-170502183048.html</link>
+      <description><![CDATA[<p>softpedia: For those unfamiliar with Snaps, they are Canonical's universal binary format for distribution of sandboxed applications across various GNU/Linux distributions.</p>]]></description>
+      <pubDate>Wed, 03 May 2017 07:00:00 -0700</pubDate>
+    <feedburner:origLink>http://www.linuxtoday.com/upload/canonical-developer-works-on-bringing-snap-support-to-raspberry-pis-raspbian-170502183048.html</feedburner:origLink></item>
+    <item>
+      <title><![CDATA[Red Hat and Amazon integrate AWS, RHEL, and OpenShift]]></title>
+      <link>http://feedproxy.google.com/~r/linuxtoday/linux/~3/iNED3Rt7Hmo/red-hat-and-amazon-integrate-aws-rhel-and-openshift-170502154029.html</link>
+      <description><![CDATA[<p>ZDnet: The public AWS cloud will meet the private OpenShift cloud in Amazon and Red Hat's newest cloud plan.</p>]]></description>
+      <pubDate>Wed, 03 May 2017 06:00:00 -0700</pubDate>
+    <feedburner:origLink>http://www.linuxtoday.com/high_performance/red-hat-and-amazon-integrate-aws-rhel-and-openshift-170502154029.html</feedburner:origLink></item>
+    <item>
+      <title><![CDATA[How to find out if a file exist or does not exist in bash shell]]></title>
+      <link>http://feedproxy.google.com/~r/linuxtoday/linux/~3/gp28h4TE6Ps/how-to-find-out-if-a-file-exist-or-does-not-exist-in-bash-shell-170502052017.html</link>
+      <description><![CDATA[<p>Nixcraft: With the help of BASH shell and IF command, it is possible to find out if a file exists or not on the filesystem.</p>]]></description>
+      <pubDate>Wed, 03 May 2017 05:00:00 -0700</pubDate>
+    <feedburner:origLink>http://www.linuxtoday.com/developer/how-to-find-out-if-a-file-exist-or-does-not-exist-in-bash-shell-170502052017.html</feedburner:origLink></item>
+  </channel>
+</rss>
+

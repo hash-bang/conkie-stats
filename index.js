@@ -20,6 +20,7 @@ var assumeAll = [
 	'temperature',
 	'topCPU',
 	'topMemory',
+	'feedRSSAtom'
 ];
 
 function ConkieStats() {

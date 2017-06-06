@@ -11,6 +11,7 @@ module.exports = {
 		net: {
 			bwmNg: true, // Whether binary `bwm-ng` is available
 			iwconfig: true, // Whether binary `iwconfig` is available
+			detectTunnels: true, // Add `tunneled: 'possible'` to all interfaces if we find a tunnel device
 			ignoreNoIP: false,
 			ignoreNoBandwidth: false,
 			ignoreDevice: [],
@@ -79,7 +80,12 @@ module.exports = {
 						return (!_.includes(self.settings.net.ignoreDevice, adapter.interface));
 					});
 
-				return next(null, this.adapters);
+				if (_.get(self.settings, 'net.detectTunnels')) {
+					var hasTunnel = this.adapters.some(a => /^tun/.test(a.interface));
+					this.adapters.forEach(adapter => adapter.tunneled = hasTunnel ? 'possible' : false);
+				}
+
+				next(null, this.adapters);
 				// }}}
 			})
 			.end(function(err) {

@@ -32,7 +32,7 @@ module.exports = {
 					if (!_.get(this.settings, 'net.bwmNg')) return next();
 					var self = this;
 					var nextOnce = _.once(next);
-					bwmNg.check(function(iface, bytesDown, bytesUp) {
+					bwmNg.check((iface, bytesDown, bytesUp) => {
 						bandwidthUsage[iface] = {
 							downSpeed: bytesDown * 100,
 							upSpeed: bytesUp * 100,
@@ -65,17 +65,17 @@ module.exports = {
 				var self = this;
 				// Filter out adapters based on `ignore*` criteria {{{
 				if (_.get(self.settings, 'net.ignoreNoIP'))
-					this.adapters = this.adapters.filter(function(adapter) {
+					this.adapters = this.adapters.filter(adapter => {
 						return (adapter.ipv4_address || adapter.ipv6_address);
 					});
 
 				if (_.get(self.settings, 'net.ignoreNoBandwidth'))
-					this.adapters = this.adapters.filter(function(adapter) {
+					this.adapters = this.adapters.filter(adapter => {
 						return (adapter.downSpeed || adapter.upSpeed);
 					});
 
 				if (_.get(self.settings, 'net.ignoreDevice'))
-					this.adapters = this.adapters.filter(function(adapter) {
+					this.adapters = this.adapters.filter(adapter => {
 						return (!_.includes(self.settings.net.ignoreDevice, adapter.interface));
 					});
 
@@ -94,15 +94,13 @@ module.exports = {
 		async()
 			.parallel([
 				function(next) {
-					which('ifconfig', function(err, binPath) {
-						if (err) { // If no binary - fail everything
-							return next('Binary `ifconfig` is not in path');
-						}
+					which('ifconfig', (err, binPath) => {
+						if (err) return next('Binary `ifconfig` is not in path'); // If no binary - fail everything
 						next();
 					});
 				},
 				function(next) {
-					which('iwconfig', function(err, binPath) {
+					which('iwconfig', (err, binPath) => {
 						if (err) { // If no binary - disable iwconfig polling
 							parentStats.emit('debug', 'Binary `iwconfig` is not in path - disabling wireless statistics');
 							_.set(settings, 'net.iwconfig', false);
@@ -111,7 +109,7 @@ module.exports = {
 					});
 				},
 				function(next) {
-					which('bwm-ng', function(err, binPath) {
+					which('bwm-ng', (err, binPath) => {
 						if (err) { // If no binary - disable BWM-NG polling
 							parentStats.emit('debug', 'Binary `bwm-ng` is not in path - disabling bandwith statistics');
 							_.set(settings, 'net.bwmNg', false);

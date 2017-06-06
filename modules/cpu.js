@@ -30,7 +30,7 @@ module.exports = {
 		}
 
 		if (this.settings.cpu.method == 'cpu-usage') {
-			cpuUsage(1000, function(usage) {
+			cpuUsage(1000, usage => {
 				parentStats.update({cpu: {usage: usage}});
 				if (!finished) { // Ensure we only call finish() once
 					finish();

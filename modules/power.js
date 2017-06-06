@@ -21,13 +21,9 @@ module.exports = {
 		async()
 			// Find all power devices {{{
 			.then('devices', function(next) {
-				fs.readdir('/sys/class/power_supply', function(err, files) {
+				fs.readdir('/sys/class/power_supply', (err, files) => {
 					if (err) return next(err);
-					return next(null, 
-						files.filter(function(name) {
-							return /^BAT/.test(name);
-						})
-					);
+					next(null, files.filter(name => /^BAT/.test(name)));
 				});
 			})
 			// }}}
@@ -54,7 +50,7 @@ module.exports = {
 						},
 						status: function(next) {
 							// Clean up status now as its used by later tasks
-							fs.readFile('/sys/class/power_supply/' + dev + '/status', 'utf8', function(err, res) {
+							fs.readFile('/sys/class/power_supply/' + dev + '/status', 'utf8', (err, res) => {
 								if (err) return next(err);
 								next(null, _.trimEnd(res).toLowerCase());
 							});

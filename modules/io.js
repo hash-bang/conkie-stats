@@ -32,8 +32,8 @@ module.exports = {
 				var self = this;
 				var iotopSlicer = /^\s*([0-9]+)\s+(.+?)\s+(.+?)\s+([0-9\.]+) K\/s\s+([0-9\.]+) K\/s\s+([0-9\.]+) %\s+([0-9\.]+) %\s+(.*)$/;
 				self.topIO = _(this.iotop)
-					.map(function(line) { return line.split('\n') })
-					.tap(function(lines) {
+					.map(line => line.split('\n'))
+					.tap(lines => {
 						// Process first line of output which gives us the total system I/O {{{
 						var bits = /Total DISK READ\s+:\s+([0-9\.]+) K\/s\s+\|\s+Total DISK WRITE\s+:\s+([0-9\.]+) K\/s/.exec(lines[0]);
 						if (bits) {
@@ -44,7 +44,7 @@ module.exports = {
 					})
 					.flatten()
 					.slice(3, 3 + settings.topProcessCount)
-					.map(function(line) {
+					.map(line => {
 						var bits = iotopSlicer.exec(line);
 						if (!bits) return null;
 						return {

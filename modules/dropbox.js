@@ -16,14 +16,12 @@ module.exports = {
 			.end(function(err) {
 				if (err) return finish(err);
 				finish(null, {
-					dropbox: _.flatten(this.dropbox.map(function(line) {
-						return line.split('\n');
-					})),
+					dropbox: _.flatten(this.dropbox.map(line => line.split('\n'))),
 				});
 			});
 	},
 	register: function(finish) {
-		which('dropbox', function(err, path) {
+		which('dropbox', (err, path) => {
 			if (err) return finish('Needed stats binary `dropbox` is not in PATH. Either install it or disable the `dropbox` module');
 
 			finish();

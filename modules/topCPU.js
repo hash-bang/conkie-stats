@@ -24,10 +24,10 @@ module.exports = {
 			.then('topCPU', function(next) {
 				var topSlicer = /^\s*([0-9]+)\s+(.+?)\s+([0-9\-]+)\s+([0-9\-]+)\s+([0-9.]+[kmgtpezy]?)\s+([0-9.]+[kmgtpezy]?)\s+([0-9.]+[kmgtpezy]?)\s+(.)\s+([0-9\.]+)\s+([0-9\.]+)\s+([0-9\.:]+)\s+(.+)\s*$/;
 				next(null, _(this.topOutput)
-					.map(function(line) { return line.split('\n') })
+					.map(line => line.split('\n'))
 					.flatten()
 					.slice(7, 7 + settings.topProcessCount)
-					.map(function(line) {
+					.map(line => {
 						var bits = topSlicer.exec(line);
 						if (!bits) return null;
 						return {
@@ -56,7 +56,7 @@ module.exports = {
 			});
 	},
 	register: function(finish) {
-		which('top', function(err, path) {
+		which('top', (err, path) => {
 			if (err) return finish('Needed stats binary `top` is not in PATH. Either install it or disable the `topCPU` module');
 
 			finish();

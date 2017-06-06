@@ -29,10 +29,10 @@ module.exports = {
 				var dfSlicer = /^(.*?)\s+(.*?)\s+(.*?)\s+(.*?)\s+(.*?)\s+(.*?)\s+(.*)$/;
 
 				next(null, _(this.df)
-					.map(function(line) { return line.split('\n') })
+					.map(line => line.split('\n'))
 					.flatten()
 					.slice(1)
-					.map(function(line) {
+					.map(line => {
 						var bits = dfSlicer.exec(line);
 						if (!bits) return null;
 						return {
@@ -44,7 +44,7 @@ module.exports = {
 							mount: bits[7],
 						};
 					})
-					.filter(function(disk) {
+					.filter(disk => {
 						if (!disk) return false; // Invalid line read
 
 						// Skip mount types we are ignoring
@@ -68,7 +68,7 @@ module.exports = {
 			});
 	},
 	register: function(finish) {
-		which('df', function(err, path) {
+		which('df', (err, path) => {
 			if (err) return finish('Needed stats binary `df` is not in PATH. Either install it or disable the `disks` module');
 
 			finish();

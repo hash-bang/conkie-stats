@@ -39,8 +39,8 @@ module.exports = {
 					Buffers: 'buffers',
 					Cached: 'cache',
 				};
-				fs.readFile('/proc/meminfo', 'utf8', function(next, content) {
-					content.split('\n').forEach(function(line) {
+				fs.readFile('/proc/meminfo', 'utf8', (next, content) => {
+					content.split('\n').forEach(line => {
 						var bits = lineSplitter.exec(line);
 						if (!bits || !fieldMaps[bits[1]]) return; // Not interested in this field
 						out.memory[fieldMaps[bits[1]]] = parseInt(bits[2]) * 1024;

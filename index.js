@@ -60,9 +60,7 @@ function ConkieStats() {
 					filter: {
 						name: /^conkie-stats-/,
 					},
-				}).then(function(res) {
-					next(null, res);
-				}, next);
+				}).then(res => next(null, res), next);
 				// }}}
 			})
 			.then(function(next) {
@@ -70,10 +68,10 @@ function ConkieStats() {
 					(!this.mods.length) ||
 					(this.mods.length == 1 && this.mods[0] == '*')
 				) { // Register all in assumeAll
-					this.mods = assumeAll.concat(this.npmModules.map(function(mod) { return mod.pkg.name }));
-					return next();
+					this.mods = assumeAll.concat(this.npmModules.map(mod => mod.pkg.name));
+					next();
 				} else {
-					return next();
+					next();
 				}
 			})
 			.then(function(next) {
@@ -83,7 +81,7 @@ function ConkieStats() {
 			.forEach('mods', function(next, modName) {
 				try {
 					var mod;
-					var npmMod = this.npmModules.find(function(mod) { return mod.pkg.name == modName });
+					var npmMod = this.npmModules.find(mod => mod.pkg.name == modName);
 
 					if (npmMod) {
 						mod = require(fspath.dirname(npmMod.path));
@@ -105,7 +103,7 @@ function ConkieStats() {
 					}
 
 					if (_.isFunction(mod.register)) {
-						mod.register(function(err) {
+						mod.register(err => {
 							if (err) {
 								self.emit('debug', 'Module ' + mod.name + ' failed to load - ' + err.toString());
 							} else {
@@ -169,7 +167,7 @@ function ConkieStats() {
 	*/
 	self.update = function(data) {
 		self.emit('updatePartial', data);
-		_.mergeWith(payload, data, function(a, b, c) {
+		_.mergeWith(payload, data, (a, b, c) => {
 			if (_.isArray(a)) return b; // Arrays are always taken in their entirety
 			return undefined;
 		});
@@ -216,7 +214,7 @@ function ConkieStats() {
 				) return next();
 
 				mod.lastPoll = Date.now(); // Mark that we are polling NOW to prevent new async threads jumping in
-				mod.poll(function(err, payload) {
+				mod.poll((err, payload) => {
 					if (err) return next(err);
 					if (payload) {
 						_.set(payload, ['lastUpdate', mod.name], mod.lastPoll);

@@ -11,13 +11,11 @@ module.exports = {
 
 		async()
 			.forEach(this.settings.files, function(next, path, key) {
-				fs.readFile(path, 'utf8', function(err, contents) {
+				fs.readFile(path, 'utf8', (err, contents) => {
 					if (err) {
 						out[key] = err.toString();
 					} else {
-						out[key] = _.dropRightWhile(contents.split("\n"), function(line) {
-							return !line;
-						});
+						out[key] = _.dropRightWhile(contents.split("\n"), line => !line);
 					}
 					next();
 				});
